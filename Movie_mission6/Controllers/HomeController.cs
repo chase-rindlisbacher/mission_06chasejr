@@ -39,10 +39,18 @@ namespace Movie_mission6.Controllers
         [HttpPost]
         public IActionResult MovieForm(MovieResponse movie)
         {
-            /*save the form's data to the private movieContext variable to be passed to database*/
-            _movieContext.Add(movie);
-            _movieContext.SaveChanges();
-            return View();
+            // save the form's data to the private movieContext variable to be passed to database
+            if (ModelState.IsValid)
+            {
+                _movieContext.Add(movie);
+                _movieContext.SaveChanges();
+                return View("Index");
+            }
+            else
+            {
+                BadRequest(ModelState);
+                return View();
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
