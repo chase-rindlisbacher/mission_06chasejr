@@ -17,6 +17,7 @@
         </tr>        
     </thead>
     <tbody>
+        @*Will list out the movies info for each movie*@
         @foreach (var x in Model)
             {
         <tr>
@@ -28,6 +29,7 @@
             <td>@x.Edited</td>
             <td>@x.Lent_to</td>
             <td>@x.Notes</td>
+            @*Will pass the movie's ID for editing or deleting actions.'*@
             <td><a asp-controller="Home" asp-action="Edit" asp-route-MovieID="@x.MovieID">Edit</a></td>
             <td><a asp-controller="Home" asp-action="Delete" asp-route-MovieID="@x.MovieID">Delete</a></td>
         </tr>

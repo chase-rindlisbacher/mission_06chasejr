@@ -53,6 +53,7 @@ namespace Movie_mission6.Controllers
                 return View(movie);
             }
         }
+        /*Will call a view that displays all the movies in your database.*/
         public IActionResult MovieList()
         {
             var movies = _movieContext.Responses
@@ -61,6 +62,7 @@ namespace Movie_mission6.Controllers
                 .ToList();
             return View(movies);
         }
+        /*Edit get method to pull up movie form that will autofill with your selected movies current values.*/
         [HttpGet]
         public IActionResult Edit(int MovieID)
         {
@@ -68,6 +70,7 @@ namespace Movie_mission6.Controllers
             var movie = _movieContext.Responses.Single(x => x.MovieID == MovieID);
             return View("Edit", movie);
         }
+        /*Edit post method will be called when you submit your updates. Will validate submission and save to database then return you to the MovieList action.*/
         [HttpPost]
         public IActionResult Edit(MovieResponse movie)
         {
@@ -84,12 +87,14 @@ namespace Movie_mission6.Controllers
                 return View(movie);
             }
         }
+        /*Delete Get method for when the delete button is pushed on the MovieList view*/
         [HttpGet]
         public IActionResult Delete(int MovieId)
         {
             var movie = _movieContext.Responses.Single(x => x.MovieID == MovieId);
             return View(movie);
         }
+        /*Delete Post method for when the delete form is submitted*/
         [HttpPost]
         public IActionResult Delete(MovieResponse movie)
         {

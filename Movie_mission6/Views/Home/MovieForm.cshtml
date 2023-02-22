@@ -13,6 +13,7 @@
     <label>Category</label>
     <select asp-for="CategoryID">
         <option value="">Select a Category</option>
+        @*Will allow you to select the movie category from a drop down list*@
         @foreach (MovieCategory c in ViewBag.Categories) 
         { 
             <option value="@c.CategoryID">@c.Category</option>

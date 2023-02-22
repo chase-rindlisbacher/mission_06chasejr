@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Movie_mission6.Models
 {
+    /*New Category table made*/
     public class MovieCategory
     {
         [Key]
