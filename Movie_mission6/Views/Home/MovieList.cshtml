@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Movie List";
+}
+@model List<MovieResponse> 
+
+<table class="table table-bordered">
+    <thead class="font-weight-bold">
+        <tr>
+            <td>Category</td>
+            <td>Title</td>
+            <td>Year</td>
+            <td>Director</td>
+            <td>Rating</td>
+            <td>Edited</td>
+            <td>Lent To</td>
+            <td>Notes</td>
+        </tr>        
+    </thead>
+    <tbody>
+        @foreach (var x in Model)
+            {
+        <tr>
+            <td>@x.Category.Category</td>
+            <td>@x.Title</td>
+            <td>@x.Year</td>
+            <td>@x.Director</td>
+            <td>@x.Rating</td>
+            <td>@x.Edited</td>
+            <td>@x.Lent_to</td>
+            <td>@x.Notes</td>
+            <td><button></button></td>
+        </tr>
+            }
+    </tbody>
+</table>

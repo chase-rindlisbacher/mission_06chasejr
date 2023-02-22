@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Movie_mission6.Models;
 using System;
@@ -11,12 +12,10 @@ namespace Movie_mission6.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private MovieContext _movieContext { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, MovieContext movieContext)
+        public HomeController(MovieContext movieContext)
         {
-            _logger = logger;
             _movieContext = movieContext;
         }
         /*Will call the Index.cshtml file*/
@@ -33,6 +32,7 @@ namespace Movie_mission6.Controllers
         [HttpGet]
         public IActionResult MovieForm()
         {
+            ViewBag.Categories = _movieContext.Categories.ToList();
             return View();
         }
         /*This method will catch input from the MovieForm delivered as an instance of the MovieResponse class*/
@@ -44,7 +44,7 @@ namespace Movie_mission6.Controllers
             {
                 _movieContext.Add(movie);
                 _movieContext.SaveChanges();
-                return View("Index");
+                return View("MovieList");
             }
             else
             {
@@ -52,11 +52,13 @@ namespace Movie_mission6.Controllers
                 return View();
             }
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult MovieList()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var movies = _movieContext.Responses
+                .Include(x => x.Category)
+                //.OrderBy(x => x.Title)
+                .ToList();
+            return View(movies);
         }
     }
 }

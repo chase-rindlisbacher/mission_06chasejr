@@ -15,15 +15,22 @@ namespace Movie_mission6.Models
         }
 
         public DbSet<MovieResponse> Responses { get; set; }
+        public DbSet<MovieCategory> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder mb)
         {
+            mb.Entity<MovieCategory>().HasData(
+                    new MovieCategory { CategoryID=1, Category="Sci-Fi"},
+                    new MovieCategory { CategoryID=2, Category="Action/Adventure"},
+                    new MovieCategory { CategoryID=3, Category="Romance"},
+                    new MovieCategory { CategoryID=4, Category="Comedy"}
+                );
             mb.Entity<MovieResponse>().HasData(
                     /*Seeding my database*/
                     new MovieResponse
                     {
                         MovieID = 1,
-                        Category = "Action/Adventure",
+                        CategoryID = 2,
                         Title = "Indiana Jones",
                         Director = "George Lucas",
                         Year = 1998,
@@ -33,7 +40,7 @@ namespace Movie_mission6.Models
                     new MovieResponse
                     {
                         MovieID = 2,
-                        Category = "Sci-Fi",
+                        CategoryID = 1,
                         Title = "Star Wars: A New Hope",
                         Director = "George Lucas",
                         Year = 1977,
@@ -44,7 +51,7 @@ namespace Movie_mission6.Models
                     new MovieResponse
                     {
                         MovieID = 3,
-                        Category = "Sci-Fi",
+                        CategoryID = 1,
                         Title = "Star Wars: The Phantom Menace",
                         Director = "George Lucas",
                         Year = 1999,

@@ -16,15 +16,50 @@ namespace Movie_mission6.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.32");
 
+            modelBuilder.Entity("Movie_mission6.Models.MovieCategory", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            Category = "Sci-Fi"
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            Category = "Action/Adventure"
+                        },
+                        new
+                        {
+                            CategoryID = 3,
+                            Category = "Romance"
+                        },
+                        new
+                        {
+                            CategoryID = 4,
+                            Category = "Comedy"
+                        });
+                });
+
             modelBuilder.Entity("Movie_mission6.Models.MovieResponse", b =>
                 {
                     b.Property<int>("MovieID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
                         .IsRequired()
@@ -48,10 +83,13 @@ namespace Movie_mission6.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Year")
+                    b.Property<int?>("Year")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.HasKey("MovieID");
+
+                    b.HasIndex("CategoryID");
 
                     b.ToTable("Responses");
 
@@ -59,7 +97,7 @@ namespace Movie_mission6.Migrations
                         new
                         {
                             MovieID = 1,
-                            Category = "Action/Adventure",
+                            CategoryID = 2,
                             Director = "George Lucas",
                             Notes = "This is awesome",
                             Rating = "PG-13",
@@ -69,7 +107,7 @@ namespace Movie_mission6.Migrations
                         new
                         {
                             MovieID = 2,
-                            Category = "Sci-Fi",
+                            CategoryID = 1,
                             Director = "George Lucas",
                             Edited = true,
                             Notes = "Amazing film",
@@ -80,7 +118,7 @@ namespace Movie_mission6.Migrations
                         new
                         {
                             MovieID = 3,
-                            Category = "Sci-Fi",
+                            CategoryID = 1,
                             Director = "George Lucas",
                             Edited = false,
                             Notes = "Why Jar Jar",
@@ -88,6 +126,15 @@ namespace Movie_mission6.Migrations
                             Title = "Star Wars: The Phantom Menace",
                             Year = 1999
                         });
+                });
+
+            modelBuilder.Entity("Movie_mission6.Models.MovieResponse", b =>
+                {
+                    b.HasOne("Movie_mission6.Models.MovieCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

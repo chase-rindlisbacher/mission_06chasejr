@@ -13,8 +13,16 @@
 @*Create a form that will post movie info to a database*@
 <form method="post">
     <br />
+    @*This input will be for when you build out the new model for the new database table*@
+    @*<input type="hidden" asp-for="ApplicationID"/>*@
     <label>Category</label>
-    <input type="text" asp-for="Category" id="Category"><br /><br />
+    <select asp-for="Category" id="Category">
+        <option value="">Select a Category</option>
+        @foreach (MovieCategory c in ViewBag.Categories) 
+        { 
+            <option value="@c.CategoryID">@c.Category</option>
+        }
+    </select><br /><br />
     <label>Title</label>
     <input type="text" asp-for="Title" id="Title"><br /><br />
     <label>Year</label>

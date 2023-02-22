@@ -13,11 +13,9 @@ namespace Movie_mission6.Models
         [Required]
         public int MovieID { get; set; }
         [Required]
-        public string Category { get; set; }
-        [Required]
         public string Title { get; set; }
         [Required]
-        public int Year { get; set; }
+        public int? Year { get; set; }
         [Required]
         public string Director { get; set; }
         [Required]
@@ -26,5 +24,9 @@ namespace Movie_mission6.Models
         public string Lent_to { get; set; }
         [MaxLength(25)]
         public string Notes { get; set; }
+        [Required]
+        // Build Foreign Key Migrations
+        public int CategoryID { get; set; }
+        public MovieCategory Category { get; set; }
     }
 }
