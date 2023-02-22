@@ -14,9 +14,9 @@
 <form method="post">
     <br />
     @*This input will be for when you build out the new model for the new database table*@
-    <input type="hidden" asp-for="CategoryID"/>
+    <input type="hidden" asp-for="MovieID"/>
     <label>Category</label>
-    <select asp-for="CategoryID" id="Category">
+    <select asp-for="CategoryID">
         <option value="">Select a Category</option>
         @foreach (MovieCategory c in ViewBag.Categories) 
         { 
