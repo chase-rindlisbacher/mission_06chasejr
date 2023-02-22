@@ -48,8 +48,9 @@ namespace Movie_mission6.Controllers
             }
             else
             {
+                ViewBag.Categories = _movieContext.Categories.ToList();
                 BadRequest(ModelState);
-                return View();
+                return View(movie);
             }
         }
         public IActionResult MovieList()
@@ -59,6 +60,41 @@ namespace Movie_mission6.Controllers
                 //.OrderBy(x => x.Title)
                 .ToList();
             return View(movies);
+        }
+        [HttpGet]
+        public IActionResult Edit(int MovieID)
+        {
+            ViewBag.Categories = _movieContext.Categories.ToList();
+            var movie = _movieContext.Responses.Single(x => x.MovieID == MovieID);
+            return View("MovieForm", movie);
+        }
+        [HttpPost]
+        public IActionResult Edit(MovieResponse movie)
+        {
+            if (ModelState.IsValid)
+            {
+                _movieContext.Update(movie);
+                _movieContext.SaveChanges();
+                return RedirectToAction("MovieList");
+            }
+            else // If Invalid
+            {
+                ViewBag.Categories = _movieContext.Categories.ToList();
+                BadRequest(ModelState);
+                return View(movie);
+            }
+        }
+        [HttpGet]
+        public IActionResult Delete(int MovieId)
+        {
+            var movie = _movieContext.Responses.Single(x => x.MovieID == MovieId);
+            return View(movie);
+        }
+        [HttpPost]
+        public IActionResult Delete(MovieResponse movie)
+        {
+            _movieContext.Responses.Remove(movie);
+            return RedirectToAction("MovieList");
         }
     }
 }
