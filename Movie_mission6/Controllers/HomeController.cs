@@ -44,7 +44,7 @@ namespace Movie_mission6.Controllers
             {
                 _movieContext.Add(movie);
                 _movieContext.SaveChanges();
-                return View("MovieList");
+                return RedirectToAction("MovieList");
             }
             else
             {
@@ -66,7 +66,7 @@ namespace Movie_mission6.Controllers
         {
             ViewBag.Categories = _movieContext.Categories.ToList();
             var movie = _movieContext.Responses.Single(x => x.MovieID == MovieID);
-            return View("MovieForm", movie);
+            return View("Edit", movie);
         }
         [HttpPost]
         public IActionResult Edit(MovieResponse movie)
@@ -94,6 +94,7 @@ namespace Movie_mission6.Controllers
         public IActionResult Delete(MovieResponse movie)
         {
             _movieContext.Responses.Remove(movie);
+            _movieContext.SaveChanges();
             return RedirectToAction("MovieList");
         }
     }
